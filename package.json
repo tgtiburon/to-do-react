@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "start": "node server/server.js",
+    "seeds": "node server/seeds/index.js"
   },
   "repository": {
     "type": "git",

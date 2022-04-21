@@ -8,6 +8,8 @@ const path = require('path');
 // Hide credentials
 require('dotenv').config();
 
+console.log("DB_PW", process.env.DB_PW);
+
 //Setup express
 const app = express();
 const PORT = process.env.PORT || 3001;
