@@ -1,6 +1,7 @@
 
 CREATE DATABASE todo_amesite;
 
+
 create TABLE tasks(
     task_id SERIAL PRIMARY KEY,
     title VARCHAR(64),
@@ -8,3 +9,4 @@ create TABLE tasks(
     due_date TIMESTAMP NOT NULL,
     tags text[]
 );
+
