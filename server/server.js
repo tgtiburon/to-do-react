@@ -1,3 +1,4 @@
+
 // Constants
 const express = require('express');
 const routes = require('./controllers');
@@ -40,3 +41,4 @@ app.use(routes);
 sequelize.sync({ force: false }).then(() => {
     app.listen(PORT, ()=> console.log(`Server is listening on ${PORT}`));
 });
+
