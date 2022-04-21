@@ -1,7 +1,7 @@
 const sequelize = require('../config/connection');
 const { User } = require('../models');
 
-//require('dotenv').config();
+
 const userData = [
     {
         username: 'Ringo',
