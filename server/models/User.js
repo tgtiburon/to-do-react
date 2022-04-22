@@ -17,7 +17,7 @@ User.init(
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
-            allowNull: true
+            allowNull: false
 
         },
 

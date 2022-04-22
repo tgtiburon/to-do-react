@@ -28,63 +28,63 @@ const taskData = [
         title: "Paul's first task",
         description: "Paul's first task description",
         due_date: '2022-8-4',
-        user_id: 2,//Paul
+        user_id: 3,//Paul
         task_tag: ["Travel"] 
     },
     {
         title: "Paul's second task",
         description: "Paul's second task description",
         due_date: '2022-9-5',
-        user_id: 2,//Paul
+        user_id: 3,//Paul
         task_tag: ["Work", "Travel"]  
     },
     {
         title: "Paul's third task",
         description: "Paul's third task description",
         due_date: '2022-8-30',
-        user_id: 2,//Paul
+        user_id: 3,//Paul
         task_tag: ["Home"]  
     },
     {
         title: "George's first task",
         description: "George's first task description",
         due_date: '2022-10-4',
-        user_id: 3,//George
+        user_id: 4,//George
         task_tag: ["Travel", "Fun"]  
     },
     {
         title: "George's second task",
         description: "George's second task description",
         due_date: '2022-9-11',
-        user_id: 3,//George
+        user_id: 4,//George
         task_tag: ["Work", "Home,"]  
     },
     {
         title: "George's third task",
         description: "George's third task description",
         due_date: '2022-8-31',
-        user_id: 3,//George
+        user_id: 4,//George
         task_tag: ["Home", "Fun"]  
     },
     {
         title: "John's first task",
         description: "John's first task description",
         due_date: '2022-11-7',
-        user_id: 4,//John
+        user_id: 2,//John
         task_tag: ["Travel", "Fun"]  
     },
     {
         title: "John's second task",
         description: "John's second task description",
         due_date: '2022-12-11',
-        user_id: 4,//John
+        user_id: 2,//John
         task_tag: ["Work"]  
     },
     {
         title: "John's third task",
         description: "John's third task description",
         due_date: '2023-3-17',
-        user_id: 4,//John
+        user_id: 2,//John
         task_tag: ["Home"]  
     }
    
