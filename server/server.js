@@ -2,6 +2,7 @@
 // Constants
 const express = require('express');
 const routes = require('./controllers');
+const cors = require("cors");
 
 const path = require('path');
 
@@ -34,6 +35,8 @@ const sess = {
 app.use(session(sess));
 
 //Middleware for handling json and urls
+// TODO: Test cors
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
