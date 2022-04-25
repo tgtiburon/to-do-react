@@ -33,12 +33,7 @@ function Header() {
           )}
           {!loggedIn && (
             <>
-              {/* <button onClick={() => setIsOpen(true)} id="login-btn" className="auth-btns">Log In/ <span>Sign Up</span></button> */}
-              <Login
-              // open={isOpen}
-              // onClose={() => setIsOpen(false)}
-              />
-              <Signup />
+           
             </>
           )}
         </div>

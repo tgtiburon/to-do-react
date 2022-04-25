@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 
 const TaskCreate = () => {
-  //   // console.log(task);
+ 
   const [description, setDescription] = useState("Test desc");
   const [title, setTitle] = useState("Test title");
   const [due_date, setDue_date] = useState("2022,12,1");
@@ -15,9 +15,7 @@ const TaskCreate = () => {
     task_tag: task_tag,
   };
 
-  // set everything empty
 
-  // edit description
   const createTask = async (e) => {
     e.preventDefault();
     try {
@@ -28,16 +26,13 @@ const TaskCreate = () => {
         user_id: "1",
         task_tag: [task_tag]
       };
-     // console.log("------------------------");
-     // console.log(body);
-     // console.log("=============================");
+     
       const response = await fetch(`http://localhost:3001/tasks/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-     // console.log(response);
-      //console.log(JSON.stringify(body));
+    
       window.location = "/";
     } catch (error) {
       console.log(error);

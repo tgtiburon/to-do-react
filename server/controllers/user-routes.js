@@ -133,12 +133,53 @@ router.post("/login", (req, res) => {
       req.session.user_id = dbUserData.id;
       req.session.username = dbUserData.username;
       req.session.loggedIn = true;
-
-      res.json({ user: dbUserData, message: "You are now logged in!" });
+      console.log("updated session after login");
+      console.log(req.session);
+      res.json({
+        loggedIn: true,
+        user: dbUserData,
+        message: "You are now logged in!",
+      });
     });
   });
 });
+// router.get("/login", (req, res) => {
+//   User.findOne({
+//     where: {
+//       username: req.body.username,
+//     },
+//   }).then((dbUserData) => {
+//     if (!dbUserData) {
+//       res.status(400).json({ message: "No user with that username!" });
+//       return;
+//     }
 
+//     const validPassword = dbUserData.checkPassword(req.body.password);
+//     console.log("------------------------");
+//     console.log(req.body);
+
+//     if (!validPassword) {
+//       res.status(400).json({ message: "Incorrect password!" });
+//       return;
+//     }
+
+//     req.session.save(() => {
+//       req.session.user_id = dbUserData.id;
+//       req.session.username = dbUserData.username;
+//       req.session.loggedIn = true;
+//       console.log("updated session after login");
+//       console.log(req.session);
+//       res.json({
+//         loggedIn: true,
+//         user: dbUserData,
+//         message: "You are now logged in!",
+//       });
+//     });
+//   });
+//   ses = req.session;
+//   console.log(req.session);
+//   res.json(req.session);
+// });
 
 // POST /api/users/logout   Logout
 router.post("/logout", (req, res) => {
