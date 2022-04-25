@@ -2,9 +2,9 @@ import React, { Fragment, useState, useRef } from "react";
 import ReactDom from "react-dom";
 
 import Auth from "../../utils/auth";
-import './style.css';
+import "./style.css";
 
-function Login({ open, onClose }) {
+function Signup({ open, onClose }) {
   // sign up form
   const [signUpState, setSignUpState] = useState({
     userName: "Ringo",
@@ -57,28 +57,25 @@ function Login({ open, onClose }) {
 
   return (
     <Fragment>
-      <button id="login-btn" className="btn btn-success mx-3" data-toggle="modal" data-target="#id-login">
-        Log In
-      </button>
-      <div
-        class="modal"
-        id="id-login"
-        onClick={() => {
-          
-        }}
+      <button
+        id="login-btn"
+        className="btn btn-success mx-3"
+        data-toggle="modal"
+        data-target="#id-signup"
       >
+        Sign Up
+      </button>
+      <div class="modal" id="id-signup" onClick={() => {}}>
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Welcome Back!</h4>
+              <h4 class="modal-title">Signup!</h4>
               <button
                 type="button"
                 class="close"
                 data-dismiss="modal"
                 //   onClick={() => setDescription()}
-                onClick={() => {
-                
-                }}
+                onClick={() => {}}
               >
                 &times;
               </button>
@@ -128,15 +125,13 @@ function Login({ open, onClose }) {
                 data-dismiss="modal"
                 // onClick={(e) => createTask(e)}
               >
-                Login
+                Signup
               </button>
               <button
                 type="button"
                 class="btn btn-danger"
                 data-dismiss="modal"
-                onClick={() => {
-                
-                }}
+                onClick={() => {}}
               >
                 Cancel
               </button>
@@ -144,13 +139,8 @@ function Login({ open, onClose }) {
           </div>
         </div>
       </div>
-
-     
-   
-     
-    
     </Fragment>
   );
 }
 
-export default Login;
+export default Signup;

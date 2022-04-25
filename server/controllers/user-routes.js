@@ -108,7 +108,7 @@ router.delete(
   }
 );
 
-// POST /api/users/login  login
+// POST /users/login  login
 router.post("/login", (req, res) => {
   User.findOne({
     where: {
@@ -121,6 +121,8 @@ router.post("/login", (req, res) => {
     }
 
     const validPassword = dbUserData.checkPassword(req.body.password);
+    console.log("------------------------");
+    console.log(req.body);
 
     if (!validPassword) {
       res.status(400).json({ message: "Incorrect password!" });
@@ -136,6 +138,7 @@ router.post("/login", (req, res) => {
     });
   });
 });
+
 
 // POST /api/users/logout   Logout
 router.post("/logout", (req, res) => {

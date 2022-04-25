@@ -16,18 +16,17 @@ const TaskEdit = ({ task }) => {
         description: description,
         due_date: due_date,
         user_id: "1",
-        task_tag: task_tag,
+        task_tag: [task_tag],
       };
-      console.log("------------------------");
-      console.log(body);
+      //console.log("------------------------");
+      //console.log(body);
       const response = await fetch(`http://localhost:3001/tasks/${task.id}`, {
         method: "PUT",
-        // mode: "cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      // console.log(response);
-      //window.location = "/";
+      //console.log(response);
+      window.location = "/";
     } catch (error) {
       console.log(error.message);
     }
@@ -46,7 +45,6 @@ const TaskEdit = ({ task }) => {
       <div
         class="modal"
         id={`id${task.id}`}
-        // onClick={() => setDescription(task.description)}
         onClick={() => {
           setDescription(task.description);
           setTitle(task.title);

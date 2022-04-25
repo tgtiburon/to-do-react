@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-//import TaskCreate from "../TaskCreate";
+import TaskCreate from "../TaskCreate";
 
 const TaskInput = () => {
   const [description, setDescription] = useState("Default description");
@@ -29,17 +29,22 @@ const TaskInput = () => {
   };
   return (
     <Fragment>
-      <h1 className="text-center mt-5">TODO LIST</h1>
-      <form className="d-flex mt-5" onSubmit={onSubmitForm}>
-        <input
+      <h1 className="text-center mt-5">ADD A NEW TASK</h1>
+      {/* <form className="d-flex mt-5" onSubmit={onSubmitForm}> */}
+        {/* <input
           type="text "
           className="form-control"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-        />
+        /> */}
         {/* <TaskCreate /> */}
-        <button className="btn btn-success">Add Task</button>
-      </form>
+        {/* <button className="btn btn-success">Add Task</button> */}
+        <div>
+        <TaskCreate />
+
+        </div>
+       
+      {/* </form> */}
     </Fragment>
   );
 };
