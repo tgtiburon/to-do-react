@@ -8,7 +8,6 @@ const path = require("path");
 // Hide credentials
 require("dotenv").config();
 
-
 //Setup express
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -16,13 +15,13 @@ const PORT = process.env.PORT || 3001;
 // Setup sessions/ and sessions-sequelize
 const session = require("express-session");
 const sequelize = require("./config/connection");
-const { Server } = require("http");
+//const { Server } = require("http");
 const sequelizeStore = require("connect-session-sequelize")(session.Store);
 
 const sess = {
   //     // TODO: Setup on Heroku as key pair
   secret: process.env.SESSION_PW,
-  cookie: { httpOnly: true, maxAge: 60000, loggedIn: false },
+  cookie: { httpOnly: true, maxAge: 600000 },
   resave: false,
   saveUninitialized: true,
   // TODO: SequelizeStore
@@ -36,7 +35,13 @@ app.use(session(sess));
 
 //Middleware for handling json and urls
 // TODO: Test cors
-app.use(cors());
+app.use(
+  cors(/*{
+    origin: true,
+    credentials: true,
+    optionsSuccessStatus: 200,
+  }*/)
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

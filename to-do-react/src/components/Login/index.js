@@ -16,8 +16,8 @@ const Login = () => {
 
   // login form
   const [logInState, setLogInState] = useState({
-    username: "",
-    password: "",
+    username: "Ringo",
+    password: "pass1234",
   });
 
   const handleCreateAccount = async () => {
@@ -25,6 +25,7 @@ const Login = () => {
       const body = signUpState;
       const loginUser = await fetch(`http://localhost:3001/users/`, {
         method: "POST",
+        credentials: 'include',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
@@ -66,6 +67,7 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
+      console.log(loginUser);
     } catch (e) {
       console.error(e);
     }
