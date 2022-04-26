@@ -34,22 +34,11 @@ router.get('/', (req,res) => {
             'username',
             'email',   
         ],
-        // include: [
-        //     {
-        //         model: Task,
-        //         attributes: [
-        //             'id',
-        //             // 'title',
-        //             // 'description',
-        //             // 'due_date',
-        //             // 'task_tag'
-        //         ]
-        //     }  
-        // ]
+    
     })
     .then(dbUserData => {
         const users = dbUserData.map( user => user.get({ plain : true }));
-        console.log(users);
+      
         res.json(users);
        
     })

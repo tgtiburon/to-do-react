@@ -2,11 +2,12 @@
   "name": "to-do-react",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server/server.js",
   "scripts": {
     "test": "jest",
     "start": "node server/server.js",
-    "seeds": "node server/seeds/index.js"
+    "seeds": "node server/seeds/index.js",
+    "develop": "cd server && npm run watch"
   },
   "repository": {
     "type": "git",
