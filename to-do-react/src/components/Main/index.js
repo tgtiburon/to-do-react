@@ -4,17 +4,18 @@ import TaskCreate from "../TaskCreate";
 import TaskInput from "../TaskInput";
 import TaskEdit from "../TaskEdit";
 import Login from "../Login";
+import Signup from "../Signup";
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const deleteTask = async (id) => {
     try {
       const deleteTask = await fetch(`http://localhost:3001/tasks/${id}`, {
         method: "DELETE",
       });
-      console.log(deleteTask);
+    
       // Update task state
       setTasks(tasks.filter((task) => task.id !== id));
     } catch (error) {
@@ -28,7 +29,7 @@ const TaskList = () => {
       const response = await fetch("http://localhost:3001/tasks/1");
       const jsonData = await response.json();
 
-      console.log(jsonData);
+  
       // update the state with jsondata
       setTasks(jsonData);
     } catch (error) {
@@ -45,7 +46,7 @@ const TaskList = () => {
       const response = await fetch("http://localhost:3001/tasks/title_a/1");
       const jsonData = await response.json();
 
-      console.log(jsonData);
+      
       // update the state with jsondata
       setTasks(jsonData);
     } catch (error) {
@@ -59,7 +60,7 @@ const TaskList = () => {
       const response = await fetch("http://localhost:3001/tasks/title_d/1");
       const jsonData = await response.json();
 
-      console.log(jsonData);
+    
       // update the state with jsondata
       setTasks(jsonData);
     } catch (error) {
@@ -76,7 +77,7 @@ const TaskList = () => {
         const response = await fetch("http://localhost:3001/tasks/date_a/1");
         const jsonData = await response.json();
   
-        console.log(jsonData);
+       
         // update the state with jsondata
         setTasks(jsonData);
       } catch (error) {
@@ -90,7 +91,7 @@ const TaskList = () => {
         const response = await fetch("http://localhost:3001/tasks/date_d/1");
         const jsonData = await response.json();
   
-        console.log(jsonData);
+     
         // update the state with jsondata
         setTasks(jsonData);
       } catch (error) {
@@ -107,7 +108,9 @@ const TaskList = () => {
   return (
     <Fragment>
       {!isLoggedIn ? (
-        <Login />
+
+         <Login />
+       
       ) : (
         <>
           <TaskInput />

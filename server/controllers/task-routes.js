@@ -7,7 +7,7 @@ const router = require("express").Router();
 //  GET   /tasks/:id  ---> Get tasks by userid
 
 router.get("/:id", (req, res) => {
-  console.log(req.session.loggedIn);
+
   Task.findAll({
     where: {
       user_id: req.params.id,
@@ -25,8 +25,7 @@ router.get("/:id", (req, res) => {
   })
     .then((dbTaskData) => {
       res.json(dbTaskData);
-      console.log("in get");
-      console.log(req.session);
+   
       //res.render("index", { loggedIn: req.session.loggedIn });
     })
     .catch((err) => {
@@ -60,8 +59,7 @@ router.get("/title_a/:id", (req, res) => {
   })
     .then((dbTaskData) => {
       res.json(dbTaskData);
-      console.log("in get");
-      console.log(req.session);
+    
       //res.render("index", { loggedIn: req.session.loggedIn });
     })
     .catch((err) => {
@@ -95,8 +93,7 @@ router.get("/title_d/:id", (req, res) => {
   })
     .then((dbTaskData) => {
       res.json(dbTaskData);
-      console.log("in get");
-      console.log(req.session);
+    
       //res.render("index", { loggedIn: req.session.loggedIn });
     })
     .catch((err) => {
@@ -131,8 +128,7 @@ router.get("/date_a/:id", (req, res) => {
   })
     .then((dbTaskData) => {
       res.json(dbTaskData);
-      console.log("in get");
-      console.log(req.session);
+      
       //res.render("index", { loggedIn: req.session.loggedIn });
     })
     .catch((err) => {
@@ -146,7 +142,7 @@ router.get("/date_a/:id", (req, res) => {
 //  GET   /tasks/:id  ---> Get tasks by userid
 
 router.get("/date_d/:id", (req, res) => {
-  console.log(req.session.loggedIn);
+
   Task.findAll({
     where: {
       user_id: req.params.id,
@@ -166,8 +162,7 @@ router.get("/date_d/:id", (req, res) => {
   })
     .then((dbTaskData) => {
       res.json(dbTaskData);
-      console.log("in get");
-      console.log(req.session);
+   
       //res.render("index", { loggedIn: req.session.loggedIn });
     })
     .catch((err) => {

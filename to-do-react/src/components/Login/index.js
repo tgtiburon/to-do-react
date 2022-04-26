@@ -4,124 +4,195 @@ import ReactDom from "react-dom";
 import Auth from "../../utils/auth";
 import "./style.css";
 
-function Login() {
+const Login = () => {
+  const [isNewAccount, setIsNewAccount] = useState(false);
   // sign up form
   const [signUpState, setSignUpState] = useState({
-    userName: "Ringo",
-    password: "pass1234",
+    username: "",
+    email: "",
+    password: "",
   });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // submit sign up form
-  const handleFormSubmitNewUser = async (event) => {
-    event.preventDefault();
-
-    try {
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
   // login form
   const [logInState, setLogInState] = useState({
-    userName: "Ringo",
-    password: "pass1234",
+    username: "",
+    password: "",
   });
 
-  const handleCreateAccount = () => {
-    console.log("HandleFormSubmitLogin was clicked");
-    setIsLoggedIn(true);
-   
-  };
-
-  const handleLogin = () => {
-    console.log("HandleFormSubmitLogin was clicked");
-    setIsLoggedIn(true);
-   
-  };
-
-  // submit login form
-  const handleFormSubmitLogin = async (event) => {
-    event.preventDefault();
-
+  const handleCreateAccount = async () => {
     try {
-      // const { data } = await login({
-      //   variables: { ...logInState },
-      // });
-      //Auth.login(data.login.token);
-      const loginUser = await fetch(`http://localhost:3001/users/login`, {
-        userName: "Ringo",
-        password: "pass1234",
+      const body = signUpState;
+      const loginUser = await fetch(`http://localhost:3001/users/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
       });
+    } catch (error) {
+      console.error(error.message);
+    }
 
-      console.log(loginUser);
+    setIsLoggedIn(true);
+  };
+  // handle login form changes based on input
+  const handleLoginChange = (event) => {
+    const { name, value } = event.target;
+    console.log("name", name);
+    console.log("value", value);
+
+    setLogInState({
+      ...logInState,
+      [name]: value,
+    });
+  };
+
+  const handleCreateChange = (event) => {
+    const { name, value } = event.target;
+    console.log("name", name);
+    console.log("value", value);
+
+    setSignUpState({
+      ...signUpState,
+      [name]: value,
+    });
+  };
+
+  const handleLogin = async () => {
+    try {
+      let body = logInState;
+      console.log(body);
+      const loginUser = await fetch(`http://localhost:3001/users/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
     } catch (e) {
       console.error(e);
     }
 
-    // clear form values
-    // setLogInState({
-    //   userName: "",
-    //   password: "",
-    // });
+    setIsLoggedIn(true);
   };
 
-  // TODO: Fix
-  let password = "pass1234";
-  let username = "Test Username";
-
   return (
-    <>
-    {/* <div class="modal" id="id-login" onClick={() => {}}> */}
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Welcome!</h4>
-        </div>
-        <div class="modal-body">
-          <p>Username:</p>
-          <input
-            type="text"
-            className="form-control"
-            value={username}
-            // onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
+    <Fragment>
+      {!isNewAccount ? (
+        <>
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Welcome Back!</h4>
+              </div>
+              <div class="modal-body">
+                <p>Username:</p>
+                <input
+                  type="text"
+                  name="username"
+                  className="form-control"
+                  value={logInState.username}
+                  onChange={handleLoginChange}
+                />
+              </div>
 
-        <div class="modal-body">
-          <p>Password:</p>
-          <input
-            type="text"
-            className="form-control"
-            value={password}
-            // onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-warning"
-            data-dismiss="modal"
-             onClick={()=> handleCreateAccount()}
-           //onClick={()=> setIsLoggedIn(true)}  
-          >
-            Create Account
-          </button>
-          <button
-            type="button"
-            class="btn btn-success"
-            data-dismiss="modal"
-             onClick={()=> handleLogin()}
-           //onClick={()=> setIsLoggedIn(true)}  
-          >
-            Login
-          </button>
-        </div>
-      </div>
-    </div>
-    {/* </div> */}
-  </>
+              <div class="modal-body">
+                <p>Password:</p>
+                <input
+                  type="text"
+                  name="password"
+                  className="form-control"
+                  value={logInState.password}
+                  onChange={handleLoginChange}
+                />
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-warning"
+                  data-dismiss="modal"
+                  onClick={() => {
+                    setIsNewAccount(true);
+                  }}
+                  //onClick={()=> setIsLoggedIn(true)}
+                >
+                  Create Account
+                </button>
+                Or
+                <button
+                  type="button"
+                  class="btn btn-success"
+                  data-dismiss="modal"
+                  onClick={() => {
+                    handleLogin();
+                  }}
+                  //onClick={()=> setIsLoggedIn(true)}
+                >
+                  Login
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Create a new account!</h4>
+              </div>
+              <div class="modal-body">
+                <p>Username:</p>
+                <input
+                  type="text"
+                  name="username"
+                  className="form-control"
+                  value={signUpState.username}
+                  onChange={handleCreateChange}
+                />
+              </div>
+              <div class="modal-body">
+                <p>Email:</p>
+                <input
+                  type="text"
+                  name="email"
+                  className="form-control"
+                  value={signUpState.email}
+                  onChange={handleCreateChange}
+                />
+              </div>
+
+              <div class="modal-body">
+                <p>Password:</p>
+                <input
+                  type="text"
+                  name="password"
+                  className="form-control"
+                  value={signUpState.password}
+                  onChange={handleCreateChange}
+                />
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-warning"
+                  data-dismiss="modal"
+                  onClick={() => setIsNewAccount(false)}
+                >
+                  Back to Login
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-success"
+                  data-dismiss="modal"
+                  onClick={() => handleCreateAccount()}
+                >
+                  Create Account
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+    </Fragment>
   );
-}
+};
 
 export default Login;

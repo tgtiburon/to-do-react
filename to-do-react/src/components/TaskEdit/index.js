@@ -18,14 +18,13 @@ const TaskEdit = ({ task }) => {
         user_id: "1",
         task_tag: [task_tag],
       };
-      //console.log("------------------------");
-      //console.log(body);
+     
       const response = await fetch(`http://localhost:3001/tasks/${task.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      //console.log(response);
+     
       window.location = "/";
     } catch (error) {
       console.log(error.message);

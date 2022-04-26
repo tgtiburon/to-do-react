@@ -10,8 +10,7 @@ function Header() {
 
   //const loggedIn = Auth.loggedIn();
   const loggedIn = false;
-  //console.log(req.session.loggedIn);
-
+ 
   const logout = (event) => {
     event.preventDefault();
     Auth.logout();

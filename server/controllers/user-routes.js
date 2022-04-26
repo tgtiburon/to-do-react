@@ -6,8 +6,7 @@ const withAuth = require("../../to-do-react/src/utils/auth");
 
 // GET users/1  ---> get user by id
 router.get("/:id", (req, res) => {
-  console.log("---------->", req.params.id);
-
+ 
   User.findAll({
     where: {
       id: req.params.id,
@@ -121,13 +120,12 @@ router.post("/login", (req, res) => {
     }
 
     const validPassword = dbUserData.checkPassword(req.body.password);
-    console.log("------------------------");
-    console.log(req.body);
-
+ 
     if (!validPassword) {
       res.status(400).json({ message: "Incorrect password!" });
       return;
     }
+    
 
     req.session.save(() => {
       req.session.user_id = dbUserData.id;
@@ -141,7 +139,11 @@ router.post("/login", (req, res) => {
         message: "You are now logged in!",
       });
     });
-  });
+  })
+  .catch(error=> {
+    console.log(error);
+    res.status(500).json(error);
+  })
 });
 // router.get("/login", (req, res) => {
 //   User.findOne({
