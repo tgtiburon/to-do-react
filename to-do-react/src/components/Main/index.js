@@ -1,6 +1,4 @@
 import React, { Fragment, useEffect, useState } from "react";
-import Auth from "../../utils/auth";
-import TaskCreate from "../TaskCreate";
 import TaskInput from "../TaskInput";
 import TaskEdit from "../TaskEdit";
 import Login from "../Login";
@@ -12,9 +10,7 @@ const TaskList = () => {
   const [isLoggedIn, setIsLoggedIn] = useState();
   const [userId, setUserId] = useState(1);
 
-
-  // TODO: get data from Login
-
+// Delete task by id
   const deleteTask = async (id) => {
     try {
       const deleteTask = await fetch(`http://localhost:3001/tasks/${id}`, {
@@ -28,14 +24,11 @@ const TaskList = () => {
     }
   };
 
+  // Get tasks by userId
   const getTasks = async () => {
     try {
-      //console.log("userId in getTasks", userId);
-      // will need to get user id from session tasks/:id
       const response = await fetch(`http://localhost:3001/tasks/${userId}`);
       const jsonData = await response.json();
-
-      // update the state with jsondata
       setTasks(jsonData);
     } catch (error) {
       console.log(error.message);
@@ -43,27 +36,22 @@ const TaskList = () => {
   };
 
   // TODO: Could do a string concat to make into one function
+  // Sort titles of tasks ascending
   const sortTitleA = async () => {
-    // fetch to sort title
     try {
-      // will need to get user id from session tasks/:id
       const response = await fetch(`http://localhost:3001/tasks/title_a/${userId}`);
       const jsonData = await response.json();
-
-      // update the state with jsondata
       setTasks(jsonData);
     } catch (error) {
       console.log(error.message);
     }
   };
+  // Sort titles descending
   const sortTitleD = async () => {
-    // fetch to sort title
+  
     try {
-      // will need to get user id from session tasks/:id
       const response = await fetch(`http://localhost:3001/tasks/title_d/${userId}`);
       const jsonData = await response.json();
-
-      // update the state with jsondata
       setTasks(jsonData);
     } catch (error) {
       console.log(error.message);
@@ -71,49 +59,40 @@ const TaskList = () => {
   };
 
   // TODO: Could do a string concat to make into one function
+  // Sort dates ascending
   const sortDateA = async () => {
-    // fetch to sort title
     try {
-      // will need to get user id from session tasks/:id
       const response = await fetch(`http://localhost:3001/tasks/date_a/${userId}`);
       const jsonData = await response.json();
-
-      // update the state with jsondata
       setTasks(jsonData);
     } catch (error) {
       console.log(error.message);
     }
   };
+  // Sort dates descending
   const sortDateD = async () => {
-    // fetch to sort title
     try {
-      // will need to get user id from session tasks/:id
       const response = await fetch(`http://localhost:3001/tasks/date_d/${userId}`);
       const jsonData = await response.json();
-
-      // update the state with jsondata
       setTasks(jsonData);
     } catch (error) {
       console.log(error.message);
     }
   };
+// Logout function and remove from localstorage
   const handleLogout = async () => {
     try {
-     
-
       const response = await fetch(`http://localhost:3001/users/logout/`, {
         method: "POST",
       });
-    
       localStorage.removeItem("user");
     } catch (e) {
       console.error(e);
     }
-
     setIsLoggedIn(false);
   };
 
-
+// Used to get the user ID
   useEffect(() => {
     //TODO: Kludge
     try {
@@ -128,41 +107,24 @@ const TaskList = () => {
       else {
         setIsLoggedIn(true);
         console.log("thisUser.ID in useEffect", thisUser.id);
-       // setUserId(thisUser.id);
-       
-       setUserId(thisUser.id);
-      //setUserId(3);
-
-        
+       setUserId(thisUser.id); 
       }
       
     } catch (error) {
       
     }
-   
-
     getTasks();
   }, [userId]);
 
-
+// Might use if I switch to globalstate
   useEffect(() => {
     console.log("isLoggedIn changed!");
-    //window.location = "/";
-    
   }, [isLoggedIn]);
 
   return (
     <Fragment>
       {!isLoggedIn ? (
         <>
-          {/* <button
-            className="btn mx-2"
-            onClick={() => {
-              setIsLoggedIn(true);
-            }}
-          >
-            Set Logged In
-          </button> */}
           <Login isLoggedIn={isLoggedIn} />
         </>
       ) : (

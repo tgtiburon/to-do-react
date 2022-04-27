@@ -18,6 +18,7 @@ const TaskCreate = () => {
   };
 
 
+  // Create a task
   const createTask = async (e) => {
     e.preventDefault();
     try {
@@ -41,28 +42,23 @@ const TaskCreate = () => {
     }
   };
 
+  // Used to pull userID
   useEffect(() => {
     //TODO: Kludge
+    // The if === undefined was for debugging.
+    // clean up later
     try {
-      // sessionStorage.setItem('key', 'value);
       let thisUser = JSON.parse(localStorage.getItem("user"));
       console.log(thisUser.id);
       console.log("thisUser", thisUser);
       if (typeof thisUser.name === undefined)
       {
-       // setIsLoggedIn(false);
       }
       else {
-        //setIsLoggedIn(true);
+     
         console.log("thisUser.ID in createTask", thisUser.id);
-       // setUserId(thisUser.id);
-       
-       setUserId(thisUser.id);
-      //setUserId(3);
-
-        
-      }
-      
+       setUserId(thisUser.id); 
+      } 
     } catch (error) {
       
     } 

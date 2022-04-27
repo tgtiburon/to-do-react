@@ -1,13 +1,14 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 
 const TaskEdit = ({ task }) => {
-  // console.log(task);
+  
   const [description, setDescription] = useState(task.description);
   const [title, setTitle] = useState(task.title);
   const [due_date, setDue_date] = useState(task.due_date);
   const [task_tag, setTask_tag] = useState(task.task_tag);
+  const [userId, setUserId] = useState(1);
 
-  // edit description
+  // edit task
   const updateTask = async (e) => {
     e.preventDefault();
     try {
@@ -15,21 +16,37 @@ const TaskEdit = ({ task }) => {
         title: title,
         description: description,
         due_date: due_date,
-        user_id: "1",
+        user_id: userId,
         task_tag: [task_tag],
       };
-     
+
       const response = await fetch(`http://localhost:3001/tasks/${task.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-     
+
       window.location = "/";
     } catch (error) {
       console.log(error.message);
     }
   };
+//Used to get userinfo
+  useEffect(() => {
+    //TODO: Kludge
+    try {
+    
+      let thisUser = JSON.parse(localStorage.getItem("user"));
+      console.log(thisUser.id);
+      console.log("thisUser", thisUser);
+      if (typeof thisUser.name === undefined) {
+      } else {
+        console.log("thisUser.ID in taskedit", thisUser.id);
+        setUserId(thisUser.id);
+      }
+    } catch (error) {}
+  }, [userId]);
+
   return (
     <Fragment>
       <button

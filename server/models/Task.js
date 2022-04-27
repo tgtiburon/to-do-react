@@ -53,6 +53,7 @@ Task.init(
 
     },
     // Table configuration
+    // TODO If I had time would format time better
     {
        
         sequelize, 

@@ -1,12 +1,8 @@
-import React, { Fragment, useState, useRef } from "react";
-import ReactDom from "react-dom";
+import React, { Fragment, useState } from "react";
 
-import Auth from "../../utils/auth";
 import "./style.css";
 
 const Login = (props) => {
-  // console.log("PROPS========>", props)
-
   const [isNewAccount, setIsNewAccount] = useState();
   // sign up form
   const [signUpState, setSignUpState] = useState({
@@ -15,34 +11,44 @@ const Login = (props) => {
     password: "",
   });
   const [isLoggedIn, setIsLoggedIn] = useState(props.isLoggedIn);
-  //console.log("isloggedIn===>", isLoggedIn) ;
-  // login form
+
+  // login form filled in for testing
+  // TODO: set to ""
   const [logInState, setLogInState] = useState({
     username: "Ringo",
     password: "pass1234",
   });
 
+
   const handleCreateAccount = async () => {
     try {
       const body = signUpState;
-      const loginUser = await fetch(`http://localhost:3001/users/`, {
+      console.log("Inside create account");
+      console.log(body);
+      const response = await fetch(`http://localhost:3001/users/`, {
         method: "POST",
-       // credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
+      const jsonData = await response.json();
+      console.log(jsonData);
+      const thisUser = {
+        name: jsonData.user.username,
+        id: jsonData.user.id,
+      };
+      localStorage.setItem("user", JSON.stringify(thisUser));
+
+
     } catch (error) {
       console.error(error.message);
     }
 
     setIsLoggedIn(true);
+    window.location= "/";
   };
   // handle login form changes based on input
   const handleLoginChange = (event) => {
     const { name, value } = event.target;
-    // console.log("name", name);
-    // console.log("value", value);
-
     setLogInState({
       ...logInState,
       [name]: value,
@@ -51,9 +57,6 @@ const Login = (props) => {
 
   const handleCreateChange = (event) => {
     const { name, value } = event.target;
-    // console.log("name", name);
-    // console.log("value", value);
-
     setSignUpState({
       ...signUpState,
       [name]: value,
@@ -86,15 +89,6 @@ const Login = (props) => {
 
   return (
     <Fragment>
-      {/* <button
-        type="button"
-        className="btn btn-success"
-        data-toggle="modal"
-        data-target="#id-create"
-      >
-        Login/Signup
-      </button> */}
-
       {!isNewAccount ? (
         <>
           <div className="modal-dialog">
@@ -131,7 +125,6 @@ const Login = (props) => {
                   onClick={() => {
                     setIsNewAccount(true);
                   }}
-                  //onClick={()=> setIsLoggedIn(true)}
                 >
                   Create Account
                 </button>
@@ -143,7 +136,6 @@ const Login = (props) => {
                   onClick={() => {
                     handleLogin();
                   }}
-                  //onClick={()=> setIsLoggedIn(true)}
                 >
                   Login
                 </button>

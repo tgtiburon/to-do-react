@@ -1,13 +1,10 @@
 const sequelize = require("../config/connection");
 const { User, Task } = require("../models");
-//const { User, Task} = require('../models');
 
 const router = require("express").Router();
 
 //  GET   /tasks/:id  ---> Get tasks by userid
-
 router.get("/:id", (req, res) => {
-
   Task.findAll({
     where: {
       user_id: req.params.id,
@@ -21,12 +18,9 @@ router.get("/:id", (req, res) => {
       "user_id",
       "task_tag",
     ],
-    
   })
     .then((dbTaskData) => {
       res.json(dbTaskData);
-   
-      //res.render("index", { loggedIn: req.session.loggedIn });
     })
     .catch((err) => {
       // Server error
@@ -35,9 +29,8 @@ router.get("/:id", (req, res) => {
     });
 });
 
-// Sort by title
+// Sort by title ascending
 //  GET   /tasks/:id  ---> Get tasks by userid
-
 router.get("/title_a/:id", (req, res) => {
   console.log(req.session.loggedIn);
   Task.findAll({
@@ -53,14 +46,10 @@ router.get("/title_a/:id", (req, res) => {
       "user_id",
       "task_tag",
     ],
-   
-      order: [['title', 'ASC']],
-   
+    order: [["title", "ASC"]],
   })
     .then((dbTaskData) => {
       res.json(dbTaskData);
-    
-      //res.render("index", { loggedIn: req.session.loggedIn });
     })
     .catch((err) => {
       // Server error
@@ -69,16 +58,14 @@ router.get("/title_a/:id", (req, res) => {
     });
 });
 
-// Sort by title
+// Sort by title descending
 //  GET   /tasks/:id  ---> Get tasks by userid
-
 router.get("/title_d/:id", (req, res) => {
   console.log(req.session.loggedIn);
   Task.findAll({
     where: {
       user_id: req.params.id,
     },
-    //Query config
     attributes: [
       "id",
       "title",
@@ -87,14 +74,10 @@ router.get("/title_d/:id", (req, res) => {
       "user_id",
       "task_tag",
     ],
-    // We could use
-      order: [['title', 'DESC']],
-   
+    order: [["title", "DESC"]],
   })
     .then((dbTaskData) => {
       res.json(dbTaskData);
-    
-      //res.render("index", { loggedIn: req.session.loggedIn });
     })
     .catch((err) => {
       // Server error
@@ -103,17 +86,14 @@ router.get("/title_d/:id", (req, res) => {
     });
 });
 
-
-// Sort by title
+// Sort by due_date ascending
 //  GET   /tasks/:id  ---> Get tasks by userid
-
 router.get("/date_a/:id", (req, res) => {
   console.log(req.session.loggedIn);
   Task.findAll({
     where: {
       user_id: req.params.id,
     },
-    //Query config
     attributes: [
       "id",
       "title",
@@ -122,14 +102,10 @@ router.get("/date_a/:id", (req, res) => {
       "user_id",
       "task_tag",
     ],
-    // We could use
-      order: [['due_date', 'ASC']],
-   
+    order: [["due_date", "ASC"]],
   })
     .then((dbTaskData) => {
       res.json(dbTaskData);
-      
-      //res.render("index", { loggedIn: req.session.loggedIn });
     })
     .catch((err) => {
       // Server error
@@ -138,16 +114,13 @@ router.get("/date_a/:id", (req, res) => {
     });
 });
 
-// Sort by title
+// Sort by due_date descending
 //  GET   /tasks/:id  ---> Get tasks by userid
-
 router.get("/date_d/:id", (req, res) => {
-
   Task.findAll({
     where: {
       user_id: req.params.id,
     },
-    //Query config
     attributes: [
       "id",
       "title",
@@ -156,14 +129,10 @@ router.get("/date_d/:id", (req, res) => {
       "user_id",
       "task_tag",
     ],
-    // We could use
-      order: [['due_date', 'DESC']],
-   
+    order: [["due_date", "DESC"]],
   })
     .then((dbTaskData) => {
       res.json(dbTaskData);
-   
-      //res.render("index", { loggedIn: req.session.loggedIn });
     })
     .catch((err) => {
       // Server error
@@ -173,15 +142,11 @@ router.get("/date_d/:id", (req, res) => {
 });
 
 // POST /tasks  ---> Create a new task
-
-router.post(
-  "/",
-  /*withAuth,*/ (req, res) => {
+router.post( "/", (req, res) => {
     Task.create({
       title: req.body.title,
       description: req.body.description,
       due_date: req.body.due_date,
-      //user_id: req.session.user_id,
       user_id: req.body.user_id,
       task_tag: req.body.task_tag,
     })
@@ -196,41 +161,35 @@ router.post(
 );
 
 // PUT /tasks/:id  ---> Update a task by id
-
-router.put(
-  "/:id",
-  /*withAuth,*/ (req, res) => {
-    Task.update(
-      {
-        title: req.body.title,
-        description: req.body.description,
-        due_date: req.body.due_date,
-        //user_id: req.session.user_id,
-        user_id: req.body.user_id,
-        task_tag: req.body.task_tag,
+router.put("/:id", (req, res) => {
+  Task.update(
+    {
+      title: req.body.title,
+      description: req.body.description,
+      due_date: req.body.due_date,
+      user_id: req.body.user_id,
+      task_tag: req.body.task_tag,
+    },
+    {
+      where: {
+        id: req.params.id,
       },
-      {
-        where: {
-          id: req.params.id,
-        },
+    }
+  )
+    .then((dbTaskData) => {
+      if (!dbTaskData) {
+        res.status(404).json({ message: "No task found with this id!" });
+        return;
       }
-    )
-      .then((dbTaskData) => {
-        if (!dbTaskData) {
-          res.status(404).json({ message: "No task found with this id!" });
-          return;
-        }
-        res.json(dbTaskData);
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).json(err);
-      });
-  }
-);
+      res.json(dbTaskData);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 
 // DELETE /task/:id  ---> Delete a task by id
-
 router.delete("/:id", (req, res) => {
   Task.destroy({
     where: {

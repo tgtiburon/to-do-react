@@ -2,17 +2,14 @@ const sequelize = require("../config/connection");
 const { User, Task } = require("../models");
 
 const router = require("express").Router();
-const withAuth = require("../../to-do-react/src/utils/auth");
 
 // GET users/1  ---> get user by id
 router.get("/:id", (req, res) => {
- 
   User.findAll({
     where: {
       id: req.params.id,
     },
     attributes: [
-      //  'id',
       "username",
       "email",
     ],
@@ -24,7 +21,6 @@ router.get("/:id", (req, res) => {
     ],
   })
     .then((dbUserData) => {
-      //console.log(dbUserData);
       const users = dbUserData.map((user) => user.get({ plain: true }));
       res.json(dbUserData);
     })
@@ -37,7 +33,6 @@ router.get("/:id", (req, res) => {
 
 // POST /users --> create a new user
 router.post("/", (req, res) => {
-  // TODO: will need to adjust
   User.create({
     username: req.body.username,
     email: req.body.email,
@@ -50,7 +45,11 @@ router.post("/", (req, res) => {
         req.session.username = dbUserData.username;
         req.session.loggedIn = true;
 
-        res.json(dbUserData);
+        //res.json(dbUserData);
+        res.json({
+          user: dbUserData,
+          message: "You are now logged in!",
+        });
       });
     })
     .catch((err) => {
@@ -61,10 +60,7 @@ router.post("/", (req, res) => {
 });
 
 // PUT /users/1   ---> Update a user's info by id
-router.put(
-  "/:id",
-  /*withAuth,*/ (req, res) => {
-    // if req.body has exact key/value pairs to match the model, you can just use `req.body` instead
+router.put("/:id", (req, res) => {
     User.update(req.body, {
       where: {
         id: req.params.id,
@@ -85,9 +81,7 @@ router.put(
 );
 
 // DELETE /api/users/1 --->  Delete user by ID
-router.delete(
-  "/:id",
-  /*withAuth,*/ (req, res) => {
+router.delete( "/:id", (req, res) => {
     User.destroy({
       where: {
         id: req.params.id,
@@ -118,21 +112,17 @@ router.post("/login", (req, res) => {
       res.status(400).json({ message: "No user with that username!" });
       return;
     }
-
     const validPassword = dbUserData.checkPassword(req.body.password);
  
     if (!validPassword) {
       res.status(400).json({ message: "Incorrect password!" });
       return;
     }
-    
-
+    // Sessions acting very buggy
     req.session.save(() => {
       req.session.user_id = dbUserData.id;
       req.session.username = dbUserData.username;
       req.session.loggedIn = true;
-      console.log("updated session after login");
-      console.log(req.session);
       res.json({
         user: dbUserData,
         message: "You are now logged in!",
@@ -144,18 +134,15 @@ router.post("/login", (req, res) => {
     res.status(500).json(error);
   })
 });
+// Route to see if you are logged in
+// TODO: This is quirky and returns the cookie object not the user info tagged
+// to it
 router.post("/loggedIn", (req, res) => {
-  console.log('-----------------------------');
-  console.log("In /loggedIn");
-  console.log(req.session);
-  console.log(req.session.user_id);
-
+ 
   //res.status(200).json({ "user_id"  : req.session.user_id,"loggedIn": req.session.loggedIn} );  
   res.status(200).json(req.session );  
   });
   
-
-
 // POST /api/users/logout   Logout
 router.post("/logout", (req, res) => {
   // if they are logged in destroy the session
