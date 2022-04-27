@@ -15,7 +15,6 @@ const PORT = process.env.PORT || 3001;
 // Setup sessions/ and sessions-sequelize
 const session = require("express-session");
 const sequelize = require("./config/connection");
-//const { Server } = require("http");
 const sequelizeStore = require("connect-session-sequelize")(session.Store);
 
 const sess = {
@@ -36,11 +35,7 @@ app.use(session(sess));
 //Middleware for handling json and urls
 // TODO: Test cors
 app.use(
-  cors(/*{
-    origin: true,
-    credentials: true,
-    optionsSuccessStatus: 200,
-  }*/)
+  cors()
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -51,6 +46,8 @@ app.use((req, res, next) => {
   next();
 });
 
+// static path for public resources
+app.use(express.static(path.join(__dirname, 'public')));
 // Setup to use routes
 app.use(routes);
 

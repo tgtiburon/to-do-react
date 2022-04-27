@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState, Component } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import TaskInput from "../TaskInput";
 import TaskEdit from "../TaskEdit";
 import Login from "../Login";
@@ -14,7 +14,7 @@ const TaskList = () => {
 // Delete task by id
   const deleteTask = async (id) => {
     try {
-      const deleteTask = await fetch(`http://localhost:3001/tasks/${id}`, {
+      const deleteTask = await fetch(`/tasks/${id}`, {
         method: "DELETE",
       });
 
@@ -28,7 +28,7 @@ const TaskList = () => {
   // Get tasks by userId
   const getTasks = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/tasks/${userId}`);
+      const response = await fetch(`/tasks/${userId}`);
       const jsonData = await response.json();
       setTasks(jsonData);
     } catch (error) {
@@ -40,7 +40,7 @@ const TaskList = () => {
   // Sort titles of tasks ascending
   const sortTitleA = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/tasks/title_a/${userId}`);
+      const response = await fetch(`/tasks/title_a/${userId}`);
       const jsonData = await response.json();
       setTasks(jsonData);
     } catch (error) {
@@ -51,7 +51,7 @@ const TaskList = () => {
   const sortTitleD = async () => {
   
     try {
-      const response = await fetch(`http://localhost:3001/tasks/title_d/${userId}`);
+      const response = await fetch(`/tasks/title_d/${userId}`);
       const jsonData = await response.json();
       setTasks(jsonData);
     } catch (error) {
@@ -63,7 +63,7 @@ const TaskList = () => {
   // Sort dates ascending
   const sortDateA = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/tasks/date_a/${userId}`);
+      const response = await fetch(`/tasks/date_a/${userId}`);
       const jsonData = await response.json();
       setTasks(jsonData);
     } catch (error) {
@@ -73,7 +73,7 @@ const TaskList = () => {
   // Sort dates descending
   const sortDateD = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/tasks/date_d/${userId}`);
+      const response = await fetch(`/tasks/date_d/${userId}`);
       const jsonData = await response.json();
       setTasks(jsonData);
     } catch (error) {
@@ -83,7 +83,7 @@ const TaskList = () => {
 // Logout function and remove from localstorage
   const handleLogout = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/users/logout/`, {
+      const response = await fetch(`/users/logout/`, {
         method: "POST",
       });
       localStorage.removeItem("user");
@@ -102,7 +102,7 @@ const TaskList = () => {
       let thisUser =  JSON.parse(localStorage.getItem("user"));
       console.log(thisUser.id);
       console.log("thisUser", thisUser);
-      if (typeof thisUser.name === undefined)
+      if (typeof thisUser.name === "undefined")
       {
         setIsLoggedIn(false);
       }
@@ -117,16 +117,14 @@ const TaskList = () => {
     }
     console.log("IN USEEFFECT", userId);
     if(userId) {
+      //TODO: Move getTasks() into useEffect to get rid
+      // of warning?
       getTasks();
 
     }
     
   }, [userId]);
 
-// Might use if I switch to globalstate
-  // useEffect(() => {
-  //   console.log("isLoggedIn changed!");
-  // }, [isLoggedIn]);
 
   return (
     <Fragment>
