@@ -1,38 +1,20 @@
-.App {
-  text-align: center;
+/* Color Theme Swatches in Hex */
+:root{
+  --color1: #A63740;
+  --color2: #0C0D0B; 
+  --color3: #8FA66D; 
+  --color4: #D1D9C1; 
+  --color5: #BF9A78; 
+  background-color: var(--color1); 
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+tr:odd {
+  background-color: var(--color3);
+  color: var(--color5);
+  
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+tr:even {
+  background-color: var(--color3);
+  color: var(--color4);
+  
 }

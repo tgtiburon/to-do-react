@@ -1,0 +1,22 @@
+/* Color Theme Swatches in Hex */
+:root{
+    --color1: #A63740;
+    --color2: #0C0D0B; 
+    --color3: #8FA66D; 
+    --color4: #D1D9C1; 
+    --color5: #BF9A78; 
+    background-color: var(--color1); 
+}
+
+ 
+
+.top {
+    background-color: var(--color1);
+    color: var(--color1);
+    text-decoration: none;
+}
+.h-title {
+    font-size:4rem;
+    color: var(--color4); 
+     
+}
