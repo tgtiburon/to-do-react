@@ -34,7 +34,7 @@ const TaskEdit = ({ task }) => {
     <Fragment>
       <button
         type="button"
-        class="btn btn-warning"
+        className="btn btn-warning"
         data-toggle="modal"
         data-target={`#id${task.id}`}
       >
@@ -42,7 +42,7 @@ const TaskEdit = ({ task }) => {
       </button>
 
       <div
-        class="modal"
+        className="modal"
         id={`id${task.id}`}
         onClick={() => {
           setDescription(task.description);
@@ -51,13 +51,13 @@ const TaskEdit = ({ task }) => {
           setTask_tag(task.task_tag);
         }}
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Edit Task</h4>
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h4 className="modal-title">Edit Task</h4>
               <button
                 type="button"
-                class="close"
+                className="close"
                 data-dismiss="modal"
                 // onClick={() => setDescription(task.description)}
                 onClick={() => {
@@ -70,7 +70,7 @@ const TaskEdit = ({ task }) => {
                 &times;
               </button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <p>Title</p>
               <input
                 type="text"
@@ -80,7 +80,7 @@ const TaskEdit = ({ task }) => {
               />
             </div>
 
-            <div class="modal-body">
+            <div className="modal-body">
               <p>Description</p>
               <input
                 type="text"
@@ -89,7 +89,7 @@ const TaskEdit = ({ task }) => {
                 onChange={(e) => setDescription(e.target.value)}
               />
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <p>Due Date</p>
               <input
                 type="text"
@@ -98,7 +98,7 @@ const TaskEdit = ({ task }) => {
                 onChange={(e) => setDue_date(e.target.value)}
               />
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <p>Task Tag(s)</p>
               <input
                 type="text"
@@ -108,10 +108,10 @@ const TaskEdit = ({ task }) => {
               />
             </div>
 
-            <div class="modal-footer">
+            <div className="modal-footer">
               <button
                 type="button"
-                class="btn btn-warning"
+                className="btn btn-warning"
                 data-dismiss="modal"
                 onClick={(e) => updateTask(e)}
               >
@@ -119,7 +119,7 @@ const TaskEdit = ({ task }) => {
               </button>
               <button
                 type="button"
-                class="btn btn-danger"
+                className="btn btn-danger"
                 data-dismiss="modal"
                 onClick={() => {
                   setDescription(task.description);

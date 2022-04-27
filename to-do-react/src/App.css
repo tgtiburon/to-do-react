@@ -8,3 +8,13 @@
   background-color: var(--color1); 
 }
 
+tr:odd {
+  background-color: var(--color3);
+  color: var(--color5);
+  
+}
+tr:even {
+  background-color: var(--color3);
+  color: var(--color4);
+  
+}

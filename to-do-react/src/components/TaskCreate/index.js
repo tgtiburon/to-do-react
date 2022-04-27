@@ -1,4 +1,5 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
+import "./style.css"
 
 const TaskCreate = () => {
  
@@ -6,12 +7,13 @@ const TaskCreate = () => {
   const [title, setTitle] = useState("Test title");
   const [due_date, setDue_date] = useState("2022,12,1");
   const [task_tag, setTask_tag] = useState("tag");
+  const [userId, setUserId] = useState(1);
 
   const task = {
     title: title,
     description: description,
     due_date: due_date,
-    user_id: 1,
+    user_id: userId,
     task_tag: task_tag,
   };
 
@@ -23,7 +25,7 @@ const TaskCreate = () => {
         title: title,
         description: description,
         due_date: due_date,
-        user_id: "1",
+        user_id: userId,
         task_tag: [task_tag]
       };
      
@@ -39,20 +41,48 @@ const TaskCreate = () => {
     }
   };
 
+  useEffect(() => {
+    //TODO: Kludge
+    try {
+      // sessionStorage.setItem('key', 'value);
+      let thisUser = JSON.parse(localStorage.getItem("user"));
+      console.log(thisUser.id);
+      console.log("thisUser", thisUser);
+      if (typeof thisUser.name === undefined)
+      {
+       // setIsLoggedIn(false);
+      }
+      else {
+        //setIsLoggedIn(true);
+        console.log("thisUser.ID in createTask", thisUser.id);
+       // setUserId(thisUser.id);
+       
+       setUserId(thisUser.id);
+      //setUserId(3);
+
+        
+      }
+      
+    } catch (error) {
+      
+    } 
+  }, [userId]);
+
   
   return (
     <Fragment>
       <button
         type="button"
-        class="btn btn-success"
+        className="btn btn-success"
         data-toggle="modal"
         data-target="#id-create"
+        id="btnNewTask"
       >
         New Task
       </button>
 
       <div
-        class="modal"
+        className="modal"
         id="id-create"
         onClick={() => {
           setDescription(task.description);
@@ -61,13 +91,13 @@ const TaskCreate = () => {
           setTask_tag(task.task_tag);
         }}
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">New Task</h4>
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h4 className="modal-title">New Task</h4>
               <button
                 type="button"
-                class="close"
+                className="close"
                 data-dismiss="modal"
                 //   onClick={() => setDescription()}
                 onClick={() => {
@@ -80,7 +110,7 @@ const TaskCreate = () => {
                 &times;
               </button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <p>Title</p>
               <input
                 type="text"
@@ -90,7 +120,7 @@ const TaskCreate = () => {
               />
             </div>
 
-            <div class="modal-body">
+            <div className="modal-body">
               <p>Description</p>
               <input
                 type="text"
@@ -99,7 +129,7 @@ const TaskCreate = () => {
                 onChange={(e) => setDescription(e.target.value)}
               />
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <p>Due Date</p>
               <input
                 type="text"
@@ -108,7 +138,7 @@ const TaskCreate = () => {
                 onChange={(e) => setDue_date(e.target.value)}
               />
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <p>Task Tag(s)</p>
               <input
                 type="text"
@@ -118,10 +148,10 @@ const TaskCreate = () => {
               />
             </div>
 
-            <div class="modal-footer">
+            <div className="modal-footer">
               <button
                 type="button"
-                class="btn btn-warning"
+                className="btn btn-warning"
                 data-dismiss="modal"
                 onClick={(e) => createTask(e)}
               >
@@ -129,7 +159,7 @@ const TaskCreate = () => {
               </button>
               <button
                 type="button"
-                class="btn btn-danger"
+                className="btn btn-danger"
                 data-dismiss="modal"
                 onClick={() => {
                   setDescription(task.description);

@@ -4,16 +4,18 @@ import ReactDom from "react-dom";
 import Auth from "../../utils/auth";
 import "./style.css";
 
-const Login = () => {
-  const [isNewAccount, setIsNewAccount] = useState(false);
+const Login = (props) => {
+  // console.log("PROPS========>", props)
+
+  const [isNewAccount, setIsNewAccount] = useState();
   // sign up form
   const [signUpState, setSignUpState] = useState({
     username: "",
     email: "",
     password: "",
   });
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const [isLoggedIn, setIsLoggedIn] = useState(props.isLoggedIn);
+  //console.log("isloggedIn===>", isLoggedIn) ;
   // login form
   const [logInState, setLogInState] = useState({
     username: "Ringo",
@@ -25,7 +27,7 @@ const Login = () => {
       const body = signUpState;
       const loginUser = await fetch(`http://localhost:3001/users/`, {
         method: "POST",
-        credentials: 'include',
+       // credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
@@ -38,8 +40,8 @@ const Login = () => {
   // handle login form changes based on input
   const handleLoginChange = (event) => {
     const { name, value } = event.target;
-    console.log("name", name);
-    console.log("value", value);
+    // console.log("name", name);
+    // console.log("value", value);
 
     setLogInState({
       ...logInState,
@@ -49,8 +51,8 @@ const Login = () => {
 
   const handleCreateChange = (event) => {
     const { name, value } = event.target;
-    console.log("name", name);
-    console.log("value", value);
+    // console.log("name", name);
+    // console.log("value", value);
 
     setSignUpState({
       ...signUpState,
@@ -61,30 +63,46 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       let body = logInState;
-      console.log(body);
-      const loginUser = await fetch(`http://localhost:3001/users/login`, {
+
+      const response = await fetch(`http://localhost:3001/users/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      console.log(loginUser);
+      const jsonData = await response.json();
+      console.log(jsonData);
+      const thisUser = {
+        name: jsonData.user.username,
+        id: jsonData.user.id,
+      };
+      localStorage.setItem("user", JSON.stringify(thisUser));
     } catch (e) {
       console.error(e);
     }
 
     setIsLoggedIn(true);
+    window.location= "/";
   };
 
   return (
     <Fragment>
+      {/* <button
+        type="button"
+        className="btn btn-success"
+        data-toggle="modal"
+        data-target="#id-create"
+      >
+        Login/Signup
+      </button> */}
+
       {!isNewAccount ? (
         <>
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title">Welcome Back!</h4>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h4 className="modal-title">Welcome Back!</h4>
               </div>
-              <div class="modal-body">
+              <div className="modal-body">
                 <p>Username:</p>
                 <input
                   type="text"
@@ -95,7 +113,7 @@ const Login = () => {
                 />
               </div>
 
-              <div class="modal-body">
+              <div className="modal-body">
                 <p>Password:</p>
                 <input
                   type="text"
@@ -105,10 +123,10 @@ const Login = () => {
                   onChange={handleLoginChange}
                 />
               </div>
-              <div class="modal-footer">
+              <div className="modal-footer">
                 <button
                   type="button"
-                  class="btn btn-warning"
+                  className="btn btn-warning"
                   data-dismiss="modal"
                   onClick={() => {
                     setIsNewAccount(true);
@@ -120,7 +138,7 @@ const Login = () => {
                 Or
                 <button
                   type="button"
-                  class="btn btn-success"
+                  className="btn btn-success"
                   data-dismiss="modal"
                   onClick={() => {
                     handleLogin();
@@ -135,12 +153,12 @@ const Login = () => {
         </>
       ) : (
         <>
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title">Create a new account!</h4>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h4 className="modal-title">Create a new account!</h4>
               </div>
-              <div class="modal-body">
+              <div className="modal-body">
                 <p>Username:</p>
                 <input
                   type="text"
@@ -150,7 +168,7 @@ const Login = () => {
                   onChange={handleCreateChange}
                 />
               </div>
-              <div class="modal-body">
+              <div className="modal-body">
                 <p>Email:</p>
                 <input
                   type="text"
@@ -161,7 +179,7 @@ const Login = () => {
                 />
               </div>
 
-              <div class="modal-body">
+              <div className="modal-body">
                 <p>Password:</p>
                 <input
                   type="text"
@@ -171,10 +189,10 @@ const Login = () => {
                   onChange={handleCreateChange}
                 />
               </div>
-              <div class="modal-footer">
+              <div className="modal-footer">
                 <button
                   type="button"
-                  class="btn btn-warning"
+                  className="btn btn-warning"
                   data-dismiss="modal"
                   onClick={() => setIsNewAccount(false)}
                 >
@@ -182,7 +200,7 @@ const Login = () => {
                 </button>
                 <button
                   type="button"
-                  class="btn btn-success"
+                  className="btn btn-success"
                   data-dismiss="modal"
                   onClick={() => handleCreateAccount()}
                 >

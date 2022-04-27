@@ -1,0 +1,26 @@
+/* Color Theme Swatches in Hex */
+:root {
+  --color1: #a63740;
+  --color2: #0c0d0b;
+  --color3: #8fa66d;
+  --color4: #d1d9c1;
+  --color5: #bf9a78;
+  --color6: #e7dfc6;
+}
+
+table {
+  font-weight: 500;
+}
+
+table tr:nth-child(odd) {
+  background-color: var(--color6);
+  color: var(--color1);
+}
+tr:nth-child(even) {
+  background-color: var(--color4);
+  color: var(--color1);
+}
+th {
+  background-color: var(--color5);
+  color: var(--color1);
+}

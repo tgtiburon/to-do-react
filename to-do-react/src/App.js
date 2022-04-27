@@ -11,21 +11,36 @@ function App() {
   const checkLoginStatus = async () => {
     try {
     
-        const loginUser = await fetch(`http://localhost:3001/users/loggedIn/`, {
-          method: "Post",
-          headers: { "Content-type": "application/json"},
-          //credentials: 'include', 
-        
-        
-        })
-        .then((loginUser) => {
-          loginUser.json();
-          console.log(loginUser);
-          //console.log(loginUser.user_id)
+        // const response = await fetch(`http://localhost:3001/users/loggedIn/`, {
+        //   method: "Post",
+        //   headers: { "Content-type": "application/json"},
+        //   //credentials: 'include', 
+        // });
+        // const jsonData = await response.json();
 
+         //console.log("jsonData  BELOW_________________")
+        //console.log(jsonData) 
+        
+       //;
+        // if (typeof jsonData.username === 'undefined'){
+        //   console.log(jsonData) ;
+        //   console.log("NOT LOGGED IN");
+        // } else {
+        //   console.log(jsonData);
+        //   const thisUser = {
+        //     name: jsonData.user.username,
+        //     id: jsonData.user.id
+        //   };
+        //   localStorage.setItem("user", JSON.stringify(thisUser));
+        // }
 
-        });
-     
+        // TODO: Kludge LocalStorage
+        let thisUser = localStorage.getItem("user");
+        console.log(thisUser);
+
+        // setGlobalState to loggedIn
+        
+
       } catch (error) {
         console.error(error.message);
       }
@@ -40,7 +55,7 @@ function App() {
       <Fragment>
         <div className="container">
           <Header />
-          {/* <TaskInput /> */}
+    
           <Main />
         </div>
       </Fragment>

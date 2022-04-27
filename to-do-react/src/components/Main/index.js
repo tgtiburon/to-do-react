@@ -4,18 +4,23 @@ import TaskCreate from "../TaskCreate";
 import TaskInput from "../TaskInput";
 import TaskEdit from "../TaskEdit";
 import Login from "../Login";
-import Signup from "../Signup";
+
+import "./style.css";
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState();
+  const [userId, setUserId] = useState(1);
+
+
+  // TODO: get data from Login
 
   const deleteTask = async (id) => {
     try {
       const deleteTask = await fetch(`http://localhost:3001/tasks/${id}`, {
         method: "DELETE",
       });
-    
+
       // Update task state
       setTasks(tasks.filter((task) => task.id !== id));
     } catch (error) {
@@ -25,11 +30,11 @@ const TaskList = () => {
 
   const getTasks = async () => {
     try {
+      //console.log("userId in getTasks", userId);
       // will need to get user id from session tasks/:id
-      const response = await fetch("http://localhost:3001/tasks/1");
+      const response = await fetch(`http://localhost:3001/tasks/${userId}`);
       const jsonData = await response.json();
 
-  
       // update the state with jsondata
       setTasks(jsonData);
     } catch (error) {
@@ -37,16 +42,14 @@ const TaskList = () => {
     }
   };
 
-
   // TODO: Could do a string concat to make into one function
   const sortTitleA = async () => {
     // fetch to sort title
     try {
       // will need to get user id from session tasks/:id
-      const response = await fetch("http://localhost:3001/tasks/title_a/1");
+      const response = await fetch(`http://localhost:3001/tasks/title_a/${userId}`);
       const jsonData = await response.json();
 
-      
       // update the state with jsondata
       setTasks(jsonData);
     } catch (error) {
@@ -57,10 +60,9 @@ const TaskList = () => {
     // fetch to sort title
     try {
       // will need to get user id from session tasks/:id
-      const response = await fetch("http://localhost:3001/tasks/title_d/1");
+      const response = await fetch(`http://localhost:3001/tasks/title_d/${userId}`);
       const jsonData = await response.json();
 
-    
       // update the state with jsondata
       setTasks(jsonData);
     } catch (error) {
@@ -68,53 +70,105 @@ const TaskList = () => {
     }
   };
 
+  // TODO: Could do a string concat to make into one function
+  const sortDateA = async () => {
+    // fetch to sort title
+    try {
+      // will need to get user id from session tasks/:id
+      const response = await fetch(`http://localhost:3001/tasks/date_a/${userId}`);
+      const jsonData = await response.json();
 
-    // TODO: Could do a string concat to make into one function
-    const sortDateA = async () => {
-      // fetch to sort title
-      try {
-        // will need to get user id from session tasks/:id
-        const response = await fetch("http://localhost:3001/tasks/date_a/1");
-        const jsonData = await response.json();
-  
-       
-        // update the state with jsondata
-        setTasks(jsonData);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-    const sortDateD = async () => {
-      // fetch to sort title
-      try {
-        // will need to get user id from session tasks/:id
-        const response = await fetch("http://localhost:3001/tasks/date_d/1");
-        const jsonData = await response.json();
-  
+      // update the state with jsondata
+      setTasks(jsonData);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  const sortDateD = async () => {
+    // fetch to sort title
+    try {
+      // will need to get user id from session tasks/:id
+      const response = await fetch(`http://localhost:3001/tasks/date_d/${userId}`);
+      const jsonData = await response.json();
+
+      // update the state with jsondata
+      setTasks(jsonData);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  const handleLogout = async () => {
+    try {
      
-        // update the state with jsondata
-        setTasks(jsonData);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
 
-  
+      const response = await fetch(`http://localhost:3001/users/logout/`, {
+        method: "POST",
+      });
+    
+      localStorage.removeItem("user");
+    } catch (e) {
+      console.error(e);
+    }
+
+    setIsLoggedIn(false);
+  };
+
 
   useEffect(() => {
+    //TODO: Kludge
+    try {
+      // sessionStorage.setItem('key', 'value);
+      let thisUser = JSON.parse(localStorage.getItem("user"));
+      console.log(thisUser.id);
+      console.log("thisUser", thisUser);
+      if (typeof thisUser.name === undefined)
+      {
+        setIsLoggedIn(false);
+      }
+      else {
+        setIsLoggedIn(true);
+        console.log("thisUser.ID in useEffect", thisUser.id);
+       // setUserId(thisUser.id);
+       
+       setUserId(thisUser.id);
+      //setUserId(3);
+
+        
+      }
+      
+    } catch (error) {
+      
+    }
+   
+
     getTasks();
-  }, []);
+  }, [userId]);
+
+
+  useEffect(() => {
+    console.log("isLoggedIn changed!");
+    //window.location = "/";
+    
+  }, [isLoggedIn]);
 
   return (
     <Fragment>
       {!isLoggedIn ? (
-
-         <Login />
-       
+        <>
+          {/* <button
+            className="btn mx-2"
+            onClick={() => {
+              setIsLoggedIn(true);
+            }}
+          >
+            Set Logged In
+          </button> */}
+          <Login isLoggedIn={isLoggedIn} />
+        </>
       ) : (
         <>
           <TaskInput />
-          <table class="table table-bordered mt-5 text-center">
+          <table className="table table-bordered mt-5 text-center">
             <thead>
               <tr>
                 <th>
@@ -133,7 +187,7 @@ const TaskList = () => {
                       sortTitleD();
                     }}
                   >
-                    	↓
+                    ↓
                   </button>
                 </th>
                 <th>Description</th>
@@ -153,10 +207,21 @@ const TaskList = () => {
                       sortDateD();
                     }}
                   >
-                    	↓
+                    ↓
                   </button>
                 </th>
                 <th>Tags</th>
+                <th></th>
+                <th>
+                <button
+                    className="btn mx-2 btn-warning"
+                    onClick={() => {
+                      handleLogout();
+                    }}
+                  >
+                    Logout
+                  </button>
+                </th>
               </tr>
             </thead>
             <tbody>

@@ -8,7 +8,14 @@
     background-color: var(--color1); 
 }
 
- 
+#btnNewTask {
+    background-color: var(--color5);
+    color:var(--color1);
+    min-width: 20rem;
+    min-height: 3rem;
+    font-weight: bolder;
+     
+ }
 
 .top {
     background-color: var(--color1);
@@ -16,7 +23,7 @@
     text-decoration: none;
 }
 .h-title {
-    font-size:4rem;
-    color: var(--color4); 
+   
+     color: var(--color4); 
      
 }
