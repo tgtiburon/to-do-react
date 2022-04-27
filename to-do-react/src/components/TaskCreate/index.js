@@ -30,7 +30,7 @@ const TaskCreate = () => {
         task_tag: [task_tag]
       };
      
-      const response = await fetch(`http://localhost:3001/tasks/`, {
+      const response = await fetch(`/tasks/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -51,7 +51,7 @@ const TaskCreate = () => {
       let thisUser = JSON.parse(localStorage.getItem("user"));
       console.log(thisUser.id);
       console.log("thisUser", thisUser);
-      if (typeof thisUser.name === undefined)
+      if (typeof thisUser.name === "undefined")
       {
       }
       else {
