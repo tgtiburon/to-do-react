@@ -15,8 +15,8 @@ const Login = (props) => {
   // login form filled in for testing
   // TODO: set to ""
   const [logInState, setLogInState] = useState({
-    username: "Ringo",
-    password: "pass1234",
+    username: "",
+    password: "",
   });
 
 
@@ -91,6 +91,7 @@ const Login = (props) => {
     <Fragment>
       {!isNewAccount ? (
         <>
+        <form>
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
@@ -110,7 +111,7 @@ const Login = (props) => {
               <div className="modal-body">
                 <p>Password:</p>
                 <input
-                  type="text"
+                  type="password"
                   name="password"
                   className="form-control"
                   value={logInState.password}
@@ -142,9 +143,11 @@ const Login = (props) => {
               </div>
             </div>
           </div>
+          </form>
         </>
       ) : (
         <>
+        <form>
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
@@ -174,7 +177,7 @@ const Login = (props) => {
               <div className="modal-body">
                 <p>Password:</p>
                 <input
-                  type="text"
+                  type="password"
                   name="password"
                   className="form-control"
                   value={signUpState.password}
@@ -201,6 +204,7 @@ const Login = (props) => {
               </div>
             </div>
           </div>
+          </form>
         </>
       )}
     </Fragment>

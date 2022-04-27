@@ -14,13 +14,13 @@ table {
 
 table tr:nth-child(odd) {
   background-color: var(--color6);
-  color: var(--color1);
+  color: var(--color2);
 }
 tr:nth-child(even) {
   background-color: var(--color4);
-  color: var(--color1);
+  color: var(--color2);
 }
 th {
   background-color: var(--color5);
-  color: var(--color1);
+  color: var(--color2);
 }

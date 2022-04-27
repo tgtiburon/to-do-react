@@ -9,8 +9,8 @@
 }
 
 #btnNewTask {
-    background-color: var(--color5);
-    color:var(--color1);
+    /* background-color: var(--color5); */
+    color:white;
     min-width: 20rem;
     min-height: 3rem;
     font-weight: bolder;

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, Component } from "react";
 import TaskInput from "../TaskInput";
 import TaskEdit from "../TaskEdit";
 import Login from "../Login";
@@ -8,7 +8,8 @@ import "./style.css";
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState();
-  const [userId, setUserId] = useState(1);
+  const [userId, setUserId] = useState();
+
 
 // Delete task by id
   const deleteTask = async (id) => {
@@ -92,12 +93,13 @@ const TaskList = () => {
     setIsLoggedIn(false);
   };
 
+  
 // Used to get the user ID
   useEffect(() => {
     //TODO: Kludge
     try {
       // sessionStorage.setItem('key', 'value);
-      let thisUser = JSON.parse(localStorage.getItem("user"));
+      let thisUser =  JSON.parse(localStorage.getItem("user"));
       console.log(thisUser.id);
       console.log("thisUser", thisUser);
       if (typeof thisUser.name === undefined)
@@ -113,13 +115,18 @@ const TaskList = () => {
     } catch (error) {
       
     }
-    getTasks();
+    console.log("IN USEEFFECT", userId);
+    if(userId) {
+      getTasks();
+
+    }
+    
   }, [userId]);
 
 // Might use if I switch to globalstate
-  useEffect(() => {
-    console.log("isLoggedIn changed!");
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   console.log("isLoggedIn changed!");
+  // }, [isLoggedIn]);
 
   return (
     <Fragment>
