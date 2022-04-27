@@ -1,6 +1,7 @@
 
 module.exports = {
     // a filter function that returns posts above vote threshold
+    // Will implement later
    
     format_date: date => {
         if (typeof date !== 'object') {
